@@ -7,11 +7,15 @@ class ParsedText extends StatelessWidget {
   /// It takes a [TextStyle] object as it's property to style all the non links text objects.
   final TextStyle? style;
 
+  final TextStyle? mentionmestyle;
+
   /// Takes a list of [MatchText] object.
   ///
   /// This list is used to find patterns in the String and assign onTap [Function] when its
   /// tapped and also to provide custom styling to the linkify text
   final List<MatchText> parse;
+
+  final String mentionme;
 
   /// Text that is rendered
   ///
@@ -77,8 +81,10 @@ class ParsedText extends StatelessWidget {
   ParsedText({
     Key? key,
     required this.text,
+    required this.mentionme,
     this.parse = const <MatchText>[],
     this.style,
+    this.mentionmestyle,
     this.alignment = TextAlign.start,
     this.textDirection,
     this.softWrap = true,
@@ -147,12 +153,21 @@ class ParsedText extends StatelessWidget {
             Map<String, String> result =
                 mapping.renderText!(str: matchText, pattern: pattern);
 
-            widget = TextSpan(
-              text: "${result['display']} 111",
-              style: mapping.style != null ? mapping.style : style,
-              recognizer: TapGestureRecognizer()
-                ..onTap = () => mapping.onTap!(matchText),
-            );
+            if (mentionme == result['display']) {
+              widget = TextSpan(
+                text: "${result['display']}",
+                style: mentionmestyle,
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () => mapping.onTap!(matchText),
+              );
+            } else {
+              widget = TextSpan(
+                text: "${result['display']}",
+                style: mapping.style != null ? mapping.style : style,
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () => mapping.onTap!(matchText),
+              );
+            }
           } else if (mapping.renderWidget != null) {
             widget = WidgetSpan(
               alignment: PlaceholderAlignment.middle,
@@ -164,7 +179,7 @@ class ParsedText extends StatelessWidget {
             );
           } else {
             widget = TextSpan(
-              text: "$matchText 222",
+              text: "$matchText",
               style: mapping.style != null ? mapping.style : style,
               recognizer: TapGestureRecognizer()
                 ..onTap = () => mapping.onTap!(matchText),
@@ -172,7 +187,7 @@ class ParsedText extends StatelessWidget {
           }
         } else {
           widget = TextSpan(
-            text: "$matchText 333",
+            text: "$matchText",
             style: this.style,
           );
         }
