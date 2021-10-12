@@ -7,7 +7,7 @@ class ParsedText extends StatelessWidget {
   /// It takes a [TextStyle] object as it's property to style all the non links text objects.
   final TextStyle? style;
 
-  final TextStyle? mentionmestyle;
+  // final TextStyle? mentionmestyle;
 
   /// Takes a list of [MatchText] object.
   ///
@@ -15,7 +15,7 @@ class ParsedText extends StatelessWidget {
   /// tapped and also to provide custom styling to the linkify text
   final List<MatchText> parse;
 
-  final String mentionme;
+  // final String mentionme;
 
   /// Text that is rendered
   ///
@@ -81,10 +81,10 @@ class ParsedText extends StatelessWidget {
   ParsedText({
     Key? key,
     required this.text,
-    required this.mentionme,
+    // required this.mentionme,
     this.parse = const <MatchText>[],
     this.style,
-    this.mentionmestyle,
+    // this.mentionmestyle,
     this.alignment = TextAlign.start,
     this.textDirection,
     this.softWrap = true,
@@ -153,20 +153,20 @@ class ParsedText extends StatelessWidget {
             Map<String, String> result =
                 mapping.renderText!(str: matchText, pattern: pattern);
 
-            if (mentionme == matchText) {
-              widget = TextSpan(
-                text: "${result['display']}",
-                style: mentionmestyle,
-                recognizer: TapGestureRecognizer()
-                  ..onTap = () => mapping.onTap!(matchText),
-              );
-            } else {
+            // if (mentionme == matchText) {
+            //   widget = TextSpan(
+            //     text: "${result['display']}",
+            //     style: mentionmestyle,
+            //     recognizer: TapGestureRecognizer()
+            //       ..onTap = () => mapping.onTap!(matchText),
+            //   );
+            // } else {
               widget = TextSpan(
                 text: "${result['display']}",
                 style: mapping.style != null ? mapping.style : style,
                 recognizer: TapGestureRecognizer()
                   ..onTap = () => mapping.onTap!(matchText),
-              );
+              // );
             }
           } else if (mapping.renderWidget != null) {
             widget = WidgetSpan(
