@@ -153,6 +153,9 @@ class ParsedText extends StatelessWidget {
             Map<String, String> result =
                 mapping.renderText!(str: matchText, pattern: pattern);
 
+            print("mentionme>> $mentionme");
+            print("matchText>> $matchText");
+
             if (mentionme == matchText) {
               widget = TextSpan(
                 text: "${result['display']}",
